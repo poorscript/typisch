@@ -1,0 +1,11 @@
+{
+  "name": "typisch",
+  "set": "local",
+  "source": ".psc-package",
+  "depends":
+    [ "prelude"
+    , "psci-support"
+    , "spec"
+    , "spec-mocha"
+    ]
+}
