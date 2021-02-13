@@ -1,30 +1,49 @@
 module Typisch.Row
-  ( class Cons
+  ( class Lacks
+  , class Cons
   , class Cons2
   , class Changes
   , class Replaces
+  , module Prim.Row
   ) where
 
 import Prim.Row as Row
+import Prim.Row (class Nub, class Union)
+import Data.Symbol (class IsSymbol)
 
+-- | A version of `Prim.Row.Lacks` that infers `Data.Symbol.IsSymbol`
+-- | for you to ease record modification.
 class
-  ( Row.Lacks label tail
+  ( IsSymbol label
+  , Row.Lacks label row
+  ) <= Lacks (label :: Symbol) (row :: # Type)
+
+instance lacks ::
+  ( IsSymbol label
+  , Row.Lacks label row
+  ) => Lacks label row
+
+-- | A version of `Prim.Row.Cons` that infers `Data.Symbol.IsSymbol`
+-- | and `Prim.Row.Lacks` for you to ease record modification.
+class
+  ( Lacks label tail
   , Row.Cons label a tail row
   ) <= Cons
        (label :: Symbol)
-       (a :: Type)
-       (tail :: # Type)
-       (row :: # Type)
+       (a     :: Type)
+       (tail  :: # Type)
+       (row   :: # Type)
        | label a tail -> row
        , label row -> a tail
 
 instance cons ::
-  ( Row.Lacks label tail
+  ( Lacks label tail
   , Row.Cons label a tail row
   ) => Cons label a tail row
 
+-- | `Cons`, but for two items.
 class
-  ( Row.Lacks labelB base
+  ( Lacks labelB base
   , Cons labelA a base rowA
   , Cons labelB b rowA rowAB
   ) <= Cons2
@@ -41,11 +60,12 @@ class
        , rowA labelA a -> base
 
 instance cons2 ::
-  ( Row.Lacks labelB base
+  ( Lacks labelB base
   , Cons labelA a base rowA
   , Cons labelB b rowA rowAB
   ) => Cons2 labelA a labelB b base rowA rowAB
 
+-- | A class that represents changing the type of a label in a row.
 class
   ( Cons label a tail rowA
   , Cons label b tail rowB
@@ -66,6 +86,7 @@ instance changes ::
   , Cons label b tail rowB
   ) => Changes label a b tail rowA rowB
 
+-- | A class that represents replacing a row entry with another one.
 class
   ( Cons labelA a tail rowA
   , Cons labelB b tail rowB
