@@ -2,6 +2,7 @@ module Typisch.Row
   ( class Lacks
   , class Cons
   , class Cons2
+  , class Cons3
   , class Changes
   , class Replaces
   , module Prim.Row
@@ -34,7 +35,7 @@ class
        (tail  :: # Type)
        (row   :: # Type)
        | label a tail -> row
-       , label row -> a tail
+       , label row    -> a tail
 
 instance cons ::
   ( Lacks label tail
@@ -54,16 +55,49 @@ class
        (base   :: # Type)
        (rowA   :: # Type) -- base + a
        (rowAB  :: # Type) -- base + a + b
-       | labelA a base -> rowA
-       , labelB b rowA -> rowAB
-       , rowAB b labelB -> rowA
-       , rowA labelA a -> base
+       | labelA a base  -> rowA
+       , labelB b rowA  -> rowAB
+       , labelB b rowAB -> rowA
+       , labelA a rowA  -> base
 
 instance cons2 ::
   ( Lacks labelB base
   , Cons labelA a base rowA
   , Cons labelB b rowA rowAB
   ) => Cons2 labelA a labelB b base rowA rowAB
+
+-- | `Cons`, but for threeitems.
+class
+  ( Lacks labelB base
+  , Lacks labelC base
+  , Cons labelA a base rowA
+  , Cons labelB b rowA rowAB
+  , Cons labelC c rowAB rowABC
+  ) <= Cons3
+       (labelA :: Symbol)
+       (a      :: Type)
+       (labelB :: Symbol)
+       (b      :: Type)
+       (labelC :: Symbol)
+       (c      :: Type)
+       (base   :: # Type)
+       (rowA   :: # Type) -- base + a
+       (rowAB  :: # Type) -- base + a + b
+       (rowABC :: # Type) -- base + a + b + c
+       | labelA a base   -> rowA
+       , labelB b rowA   -> rowAB
+       , labelC c rowAB  -> rowABC
+       , labelC c rowABC -> rowAB
+       , labelB b rowAB  -> rowA
+       , labelA a rowA   -> base
+
+instance cons3 ::
+  ( Lacks labelB base
+  , Lacks labelC base
+  , Cons labelA a base rowA
+  , Cons labelB b rowA rowAB
+  , Cons labelC c rowAB rowABC
+  ) => Cons3 labelA a labelB b labelC c base rowA rowAB rowABC
 
 -- | A class that represents changing the type of a label in a row.
 class
