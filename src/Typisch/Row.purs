@@ -17,7 +17,7 @@ import Data.Symbol (class IsSymbol)
 class
   ( IsSymbol label
   , Row.Lacks label row
-  ) <= Lacks (label :: Symbol) (row :: # Type)
+  ) <= Lacks (label :: Symbol) (row :: Row Type)
 
 instance lacks ::
   ( IsSymbol label
@@ -32,8 +32,8 @@ class
   ) <= Cons
        (label :: Symbol)
        (a     :: Type)
-       (tail  :: # Type)
-       (row   :: # Type)
+       (tail  :: Row Type)
+       (row   :: Row Type)
        | label a tail -> row
        , label row    -> a tail
 
@@ -52,9 +52,9 @@ class
        (a      :: Type)
        (labelB :: Symbol)
        (b      :: Type)
-       (base   :: # Type)
-       (rowA   :: # Type) -- base + a
-       (rowAB  :: # Type) -- base + a + b
+       (base   :: Row Type)
+       (rowA   :: Row Type) -- base + a
+       (rowAB  :: Row Type) -- base + a + b
        | labelA a base  -> rowA
        , labelB b rowA  -> rowAB
        , labelB b rowAB -> rowA
@@ -80,10 +80,10 @@ class
        (b      :: Type)
        (labelC :: Symbol)
        (c      :: Type)
-       (base   :: # Type)
-       (rowA   :: # Type) -- base + a
-       (rowAB  :: # Type) -- base + a + b
-       (rowABC :: # Type) -- base + a + b + c
+       (base   :: Row Type)
+       (rowA   :: Row Type) -- base + a
+       (rowAB  :: Row Type) -- base + a + b
+       (rowABC :: Row Type) -- base + a + b + c
        | labelA a base   -> rowA
        , labelB b rowA   -> rowAB
        , labelC c rowAB  -> rowABC
@@ -107,9 +107,9 @@ class
        (label :: Symbol)
        (a     :: Type)
        (b     :: Type)
-       (tail  :: # Type)
-       (rowA  :: # Type)
-       (rowB  :: # Type)
+       (tail  :: Row Type)
+       (rowA  :: Row Type)
+       (rowB  :: Row Type)
        | label a tail -> rowA
        , label b tail -> rowB
        , label rowA -> a tail
@@ -129,9 +129,9 @@ class
        (a      :: Type)
        (labelB :: Symbol)
        (b      :: Type)
-       (tail   :: # Type)
-       (rowA   :: # Type)
-       (rowB   :: # Type)
+       (tail   :: Row Type)
+       (rowA   :: Row Type)
+       (rowB   :: Row Type)
        | labelA a tail -> rowA
        , labelB b tail -> rowB
        , labelA rowA -> a tail
