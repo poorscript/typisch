@@ -1,32 +1,21 @@
 let
-  pkgs = import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/21.11.tar.gz";
-    sha256 = "162dywda2dvfj1248afxc45kcrg83appjd0nmdb541hl7rnncf02";
-  }) {};
-  easy-ps = import (
+  pkgs = import <nixpkgs> {};
+  default-shell = import (
     pkgs.fetchFromGitHub {
-      owner = "justinwoo";
-      repo = "easy-purescript-nix";
+      owner = "garganscript";
+      repo = "package-sets";
       rev = "master";
-      sha256 = "03g9xq451dmrkq8kiz989wnl8k0lmj60ajflz44bhp7cm08hf3bw";
-    }
-  ) {
-    inherit pkgs;
-  };
-
-  build = pkgs.writeShellScriptBin "build" ''
-    #!/usr/bin/env bash
-    purs compile "src/**/*.purs" "test/**/*.purs"
-  '';
+      sha256 = "1z7x5g0ba62l6hiagwsmnmdg07mz5xwf35qvb9p7fry2lks1ma18";
+    } + "/default-shell.nix");
 in
 pkgs.mkShell {
-  name = "purescript-toestand";
+  name = "purescript-reactix";
 
   buildInputs = [
-    easy-ps.purs-0_15_4
-    easy-ps.psc-package
-    easy-ps.spago
-    build
-    pkgs.dhall-json
+    default-shell.purs
+    default-shell.easy-ps.psc-package
+    default-shell.easy-ps.spago
+    default-shell.build
+    default-shell.pkgs.dhall-json
   ];
 }
