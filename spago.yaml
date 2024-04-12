@@ -6,7 +6,7 @@ workspace:
 package:
   name: typisch
   dependencies:
-    - prelude
+    - prelude: ">=6.0.1 <7.0.0"
   test:
     main: Test.Main
     dependencies:
