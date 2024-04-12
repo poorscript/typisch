@@ -1,0 +1,14 @@
+workspace:
+  packageSet:
+    registry: 50.7.0
+  extraPackages: {}
+
+package:
+  name: typisch
+  dependencies:
+    - prelude
+  test:
+    main: Test.Main
+    dependencies:
+      - spec
+      - spec-mocha
