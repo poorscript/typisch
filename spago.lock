@@ -3,7 +3,7 @@ workspace:
     typisch:
       path: ./
       dependencies:
-        - prelude
+        - prelude: ">=6.0.1 <7.0.0"
       test_dependencies:
         - spec
         - spec-mocha
