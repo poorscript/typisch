@@ -62,7 +62,7 @@ workspace:
         - unsafe-coerce
   package_set:
     address:
-      registry: 50.7.0
+      registry: 50.9.0
     compiler: ">=0.15.15 <0.16.0"
     content:
       abc-parser: 2.0.1
@@ -149,6 +149,7 @@ workspace:
       distributive: 6.0.0
       dom-filereader: 7.0.0
       dom-indexed: 12.0.0
+      dom-simple: 0.4.0
       dotenv: 4.0.3
       droplet: 0.6.0
       dts: 1.0.0
@@ -179,6 +180,7 @@ workspace:
       fetch-argonaut: 1.0.1
       fetch-core: 5.1.0
       fetch-yoga-json: 1.1.0
+      ffi-simple: 0.5.1
       fft-js: 0.1.0
       filterable: 5.0.0
       fix-functor: 0.1.0
@@ -372,7 +374,7 @@ workspace:
       pointed-list: 0.5.1
       polymorphic-vectors: 4.0.0
       posix-types: 6.0.0
-      postgresql: 1.2.3
+      postgresql: 1.3.0
       precise: 6.0.0
       precise-datetime: 7.0.0
       prelude: 6.0.1
@@ -403,7 +405,7 @@ workspace:
       react-basic-storybook: 2.0.0
       react-dom: 8.0.0
       react-halo: 3.0.0
-      react-icons: 1.1.4
+      react-icons: 1.1.5
       react-markdown: 0.1.0
       react-testing-library: 4.0.1
       react-virtuoso: 1.0.0
